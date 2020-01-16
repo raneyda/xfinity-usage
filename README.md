@@ -7,8 +7,8 @@ It will specifically pull your current month to date usage.
 
 ## secrets.txt format
 
-username:yourusername
-password:yourpassword
+<pre>username:yourusername
+password:yourpassword</pre>
 
 ## Looking for documentation
 If you find documentation for the comcast API please notify me with a twitter mention @raneyda
