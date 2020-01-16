@@ -25,7 +25,25 @@ def parse_json (my_json_data):
     return homeUsage
 
 def parse_secrets (filename):
-    return username, password
+    username = ""
+    password = ""
+    f = open(filename,"r")
+    for line in f:
+        a,b = line.split(':')
+        if a == "username":
+            username = b.rstrip()
+        elif a == "password":
+            password = b.rstrip()
+
+    # Close the file
+    f.close()
+
+    # Only return data if secrets is parsed correctly
+    if (username == "") or (password == ""):
+        print("No username or password found - please correct secrets file")
+        return
+    else:
+        return username, password
 
 # Determine today's date for later comparison
 today = datetime.datetime.today()
@@ -37,12 +55,12 @@ LOGIN_URL = "https://login.xfinity.com/login"
 USAGE_URL = "https://customer.xfinity.com/apis/services/internet/usage"
 
 # POST request data
+username, password = parse_secrets("secrets.txt")
 data = {"user": username,
         "passwd": password,
         "s": "oauth",
         "continue": "https://oauth.xfinity.com/oauth/authorize?client_id=my-account-web&prompt=login&redirect_uri=https%3A%2F%2Fcustomer.xfinity.com%2Foauth%2Fcallback&response_type=code"
         }
-
 # Define a persistent session
 s = requests.Session()
 
