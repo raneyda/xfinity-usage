@@ -10,6 +10,7 @@ def get_compare_date (tmp_date):
     return datetime.datetime(int(year),int(month),int(day))
 
 def parse_json (my_json_data):
+    homeUsage = None
     for i in my_json_data.keys():
         if type(my_json_data[i]) == list:
             for k in my_json_data[i]:
@@ -69,5 +70,12 @@ r1 = s.post(url = LOGIN_URL, data = data)
 
 # GET request to pull usage data
 r2 = s.get(url = USAGE_URL)
+
+# Parse Usage
 my_usage = parse_json(json.loads(r2.text))
-print(detailedDate, ",", my_usage)
+
+# Print usage is available otherwise end
+if my_usage is None:
+    pass
+else:
+    print(detailedDate, ",", my_usage)
